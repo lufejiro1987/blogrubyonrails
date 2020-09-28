@@ -10,6 +10,17 @@
   </head>
 
   <body>
+    <% if logged? %>
+      <h3><%= current_user.email unless current_user.nil? %></h3>
+       <%= link_to 'cerrar sesión', session_path(1), method: :delete %>
+    <% else %>
+      <%= link_to 'crear cuenta', users_sign_up_path %>
+      <%= link_to 'iniciar sesion', users_sign_in_path %>
+    <% end %>
+   
+
+    
+    <%= notice %>
     <%= yield %>
   </body>
 </html>

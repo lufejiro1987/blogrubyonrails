@@ -1,10 +1,12 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: :index
 
   # GET /posts
   # GET /posts.json
   def index
     @posts = Post.all
+    @user = User.find(session[:user_id]) unless session[:user_id].nil?
   end
 
   # GET /posts/1
@@ -25,6 +27,7 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(post_params)
+    @post.user_id = helpers.current_user.id
 
     respond_to do |format|
       if @post.save

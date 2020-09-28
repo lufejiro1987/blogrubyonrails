@@ -1,6 +1,6 @@
 <h1>Crear cuenta</h1>
 
-<%= form_with(model: @user, local:true) do |f| %>
+<%= form_with(url: sessions_path, model: @user, local:true) do |f| %>
 
     <div>
         <%= f.label :email, 'email' %>
