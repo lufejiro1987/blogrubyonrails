@@ -5,11 +5,10 @@ class SessionsController < ApplicationController
     end
 
     def create
-        @user = User.find_by(
-                            email: params[:user][:email],
-                            password: params[:user][:password]
-                        )
-        if @user.present?
+        @user = User.find_by(email: params[:user][:email])
+        pass = BCrypt::Password.new(@user.password_digest)
+                        
+        if @user.present? && pass == params[:user][:password]
             session[:user_id] = @user.user_id
             redirecto_to root_path, notice: 'ha iniciado sesión'
         else
